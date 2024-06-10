@@ -1,0 +1,231 @@
+[
+    {
+        "name": "select race",
+		"mod": false,
+        "min": 0,
+        "max": -1,
+        "points": 0,
+        "str": 0,
+        "dex": 0,
+        "con": 0,
+        "int": 0,
+        "wis": 0,
+        "cha": 0
+    },
+	{
+		"name": "Dragonborn",
+        "str": 2,
+        "cha": 1
+	},
+	{
+		"name": "Dwarf",
+        "con": 2,
+        "subraces":[
+            {
+                "name": "No Subrace"
+            },
+            {
+                "name": "Hill Dwarf",
+                "wis": 1
+            },
+            {
+                "name": "Mountain Dwarf",
+                "str": 2
+            },
+            {
+                "name": "Mark of Warding",
+                "int": 1
+            },
+            {
+                "name": "Custom",
+                "mod": true,
+                "min": -1,
+                "max": -1,
+                "points": -1
+            }
+        ]
+	},
+	{
+		"name": "Elf",
+        "dex": 2,
+        "subraces":[
+            {
+                "name": "No Subrace"
+            },
+            {
+                "name": "Dark Elf",
+                "cha": 1
+            },
+            {
+                "name": "High Elf",
+                "int": 1
+            },
+            {
+                "name": "Wood Elf",
+                "wis": 1
+            },
+            {
+                "name": "Pallid Elf",
+                "wis": 1
+            },
+            {
+                "name": "Mark of Shadow",
+                "cha": 1
+            },
+            {
+                "name": "Custom",
+                "mod": true,
+                "min": -1,
+                "max": -1,
+                "points": -1
+            }
+        ]
+	},
+	{
+		"name": "Gnome",
+        "int": 2,
+        "subraces":[
+            {
+                "name": "No Subrace"
+            },
+            {
+                "name": "Forest Gnome",
+                "dex": 1
+            },
+            {
+                "name": "Rock Gnome",
+                "con": 1
+            },
+            {
+                "name": "Mark of Scribing",
+                "cha": 1
+            },
+            {
+                "name": "Custom",
+                "mod": true,
+                "min": -1,
+                "max": -1,
+                "points": -1
+            }
+        ]
+	},
+	{
+		"name": "Half Elf",
+        "cha": 2,
+        "mod": true,
+        "max": 1,
+        "points": 2,
+        "blocked": ["cha"]
+	},
+    {
+        "name": "Half Orc",
+        "str": 2,
+        "con": 1
+    },
+    {
+        "name": "Halfling",
+        "dex": 2,
+        "subraces":[
+            {
+                "name": "No Subrace"
+            },
+            {
+                "name": "Lightfoot",
+                "cha": 1
+            },
+            {
+                "name": "Stout",
+                "con": 1
+            },
+            {
+                "name": "Ghostwise",
+                "wis": 1
+            },
+            {
+                "name": "Lotusden",
+                "wis": 1
+            },
+            {
+                "name": "Mark of Hospitality",
+                "cha": 1
+            },{
+                "name": "Mark of Healing",
+                "wis": 1
+            },
+            {
+                "name": "Custom",
+                "mod": true,
+                "min": -1,
+                "max": -1,
+                "points": -1
+            }
+        ]
+    },
+    {
+        "name": "Human",
+        "str": 1,
+        "dex": 1,
+        "con": 1,
+        "int": 1,
+        "wis": 1,
+        "cha": 1
+    },
+    {
+        "name": "Variant Human",
+        "mod": true,
+        "max": 1,
+        "points": 2
+    },
+    {
+        "name": "Tiefling",
+        "cha": 2,
+        "subraces":[
+            {
+                "name": "No Subrace"
+            },
+            {
+                "name": "Bloodline of Asmodeus",
+                "int": 1
+            },
+            {
+                "name": "Bloodline of Baalzebul",
+                "int": 1
+            },
+            {
+                "name": "Bloodline of Dispater",
+                "dex": 1
+            },
+            {
+                "name": "Bloodline of Fierna",
+                "wis": 1
+            },
+            {
+                "name": "Bloodline of Glasya",
+                "dex": 1
+            },
+            {
+                "name": "Bloodline of Levistus",
+                "con": 1
+            },
+            {
+                "name": "Bloodline of Mammon",
+                "int": 1
+            },
+            {
+                "name": "Bloodline of Mephistopheles",
+                "int": 1
+            },
+            {
+                "name": "Bloodline of Zariel",
+                "str": 1
+            }
+        ]
+    },
+    {
+        "name": "Custom",
+        "mod": true,
+        "min": -1,
+        "max": -1,
+        "points": -1
+    }
+]

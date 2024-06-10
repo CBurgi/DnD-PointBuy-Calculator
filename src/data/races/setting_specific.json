@@ -1,0 +1,165 @@
+[
+    {
+        "name": "Kender",
+        "mod": true,
+        "max": 2,
+        "points": 3
+    },
+    {
+        "name": "Kalashtar",
+        "wis": 2,
+        "cha": 1
+    },
+    {
+        "name": "Warforged",
+        "con": 2,
+        "mod": true,
+        "max": 1,
+        "points": 1,
+        "blocked": ["con"]
+    },
+    {
+        "name": "Aetherborn",
+        "cha": 2,
+        "mod": true,
+        "max": 1,
+        "points": 1,
+        "blocked": ["cha"]
+    },
+    {
+        "name": "Aven",
+        "dex": 2,
+        "subraces":[
+            {
+                "name": "Ibis-Headed Aven",
+                "int": 1
+            },
+            {
+                "name": "Hawk-Headed Aven",
+                "wis": 1
+            }
+        ]
+    },
+    {
+        "name": "Khenra",
+        "dex": 2,
+        "str": 1
+    },
+    {
+        "name": "Kor",
+        "dex": 2,
+        "wis": 1
+    },
+    {
+        "name": "Mefolk",
+        "cha": 1,
+        "subraces": [
+            {
+                "name": "Green Merfolk",
+                "wis": 2
+            },
+            {
+                "name": "Blue Merfolk",
+                "int": 2
+            },
+            {
+                "name": "Emeria (Wind) Creed",
+                "wis": 2
+            },
+            {
+                "name": "Ula (Water) Creed",
+                "int": 2
+            },
+            {
+                "name": "Cosi Creed",
+                "cha": 1,
+                "int": 1
+            }
+        ]
+    },
+    {
+        "name": "Naga",
+        "con": 2,
+        "int": 1
+    },
+    {
+        "name": "Siren",
+        "cha": 2
+    },
+    {
+        "name": "Vampire",
+        "cha": 2,
+        "int": 1
+    },
+    {
+        "name": "Dhampir",
+        "mod": true,
+        "max": 2,
+        "points": 3
+    },
+    {
+        "name": "Hexblood",
+        "mod": true,
+        "max": 2,
+        "points": 3
+    },
+    {
+        "name": "Loxodon",
+        "con": 2,
+        "wis": 1
+    },
+    {
+        "name": "Simic Hybrid",
+        "con": 2,
+        "mod": true,
+        "max": 1,
+        "points": 1,
+        "blocked":["con"]
+    },
+    {
+        "name": "Vedalken",
+        "int": 2,
+        "wis": 1
+    },
+    {
+        "name": "Astral Elf",
+        "mod": true,
+        "max": 2,
+        "points": 3
+    },
+    {
+        "name": "Autognome",
+        "mod": true,
+        "max": 2,
+        "points": 3
+    },
+    {
+        "name": "Giff",
+        "mod": true,
+        "max": 2,
+        "points": 3
+    },
+    {
+        "name": "Hadozee",
+        "mod": true,
+        "max": 2,
+        "points": 3
+    },
+    {
+        "name": "Plasmoid",
+        "mod": true,
+        "max": 2,
+        "points": 3
+    },
+    {
+        "name": "Thri-kreen",
+        "mod": true,
+        "max": 2,
+        "points": 3
+    },
+    {
+        "name": "Leonin",
+        "con": 2,
+        "str": 1
+    }
+]

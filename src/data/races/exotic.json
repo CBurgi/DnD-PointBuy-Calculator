@@ -1,0 +1,155 @@
+[
+    {
+        "name": "Aarakocra",
+        "dex": 2,
+        "wis": 1
+    },
+    {
+        "name": "Aasimar",
+        "cha": 2,
+        "subraces":[
+            {
+                "name": "No Subrace"
+            },
+            {
+                "name": "Protector",
+                "wis": 1
+            },
+            {
+                "name": "Scourge",
+                "con": 1
+            },
+            {
+                "name": "Fallen",
+                "str": 1
+            }
+        ]
+    },
+    {
+        "name": "Changeling",
+        "cha": 2,
+        "mod": true,
+        "max": 1,
+        "points": 1,
+        "blocked":["cha"]
+    },
+    {
+        "name": "Deep Gnome",
+        "int": 2,
+        "dex": 1
+    },
+    {
+        "name": "Duergar",
+        "con": 2,
+        "str": 1
+    },
+    {
+        "name": "Eladrin",
+        "dex": 2,
+        "cha": 1
+    },
+    {
+        "name": "Fairy",
+        "mod": true,
+        "max": 2,
+        "points": 3
+    },
+    {
+        "name": "Firbolg",
+        "wis": 2,
+        "str": 1
+    },
+    {
+        "name": "Air Genasi",
+        "con": 2,
+        "dex": 1
+    },
+    {
+        "name": "Earth Genasi",
+        "con": 2,
+        "str": 1
+    },
+    {
+        "name": "Fire Genasi",
+        "con": 2,
+        "int": 1
+    },
+    {
+        "name": "Water Genasi",
+        "con": 2,
+        "wis": 1
+    },
+    {
+        "name": "Githyanki",
+        "str": 2,
+        "int": 1
+    },
+    {
+        "name": "Githzerai",
+        "wis": 2,
+        "int": 1
+    },
+    {
+        "name": "Goliath",
+        "str": 2,
+        "con": 1
+    },
+    {
+        "name": "Harengon",
+        "mod": true,
+        "max": 2,
+        "points": 3
+    },
+    {
+        "name": "Kenku",
+        "dex": 2,
+        "wis": 1
+    },
+    {
+        "name": "Locathah",
+        "str": 2,
+        "dex": 1
+    },
+    {
+        "name": "Owlin",
+        "mod": true,
+        "max": 2,
+        "points": 3
+    },
+    {
+        "name": "Satyr",
+        "cha": 2,
+        "dex": 1
+    },
+    {
+        "name": "Sea Elf",
+        "dex": 2,
+        "con": 1
+    },
+    {
+        "name": "Shadar-Kai",
+        "dex": 2,
+        "con": 1
+    },
+    {
+        "name": "Tabaxi",
+        "dex": 2,
+        "cha": 1
+    },
+    {
+        "name": "Tortle",
+        "str": 2,
+        "wis": 1
+    },
+    {
+        "name": "Tritor",
+        "str": 1,
+        "con": 1,
+        "cha": 1
+    },
+    {
+        "name": "Verdan",
+        "cha": 2,
+        "con": 1
+    }
+]
