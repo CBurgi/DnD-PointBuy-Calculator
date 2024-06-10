@@ -1,11 +1,18 @@
+import { defaultScore, customScore } from "../App";
+
 export function RaceSelect({ races, setSelectedRace, setSelectedSubrace }) {
 	return (
 		<select
+            defaultValue="select race"
 			className="raceSelect"
 			name="race"
 			onChange={(e) =>
 				races.map((race) => {
 					if (race.name === e.target.value) {
+                        if(race.subraces){
+                            race.subraces.unshift(defaultScore);
+	                        race.subraces.push(customScore);
+                        }
 						setSelectedRace({
 							name: race.name,
 							mod: race.mod,
@@ -21,23 +28,15 @@ export function RaceSelect({ races, setSelectedRace, setSelectedSubrace }) {
 							wis: race.wis ? race.wis : 0,
 							cha: race.cha ? race.cha : 0,
 							subraces: race.subraces ? race.subraces : false,
+                            dontInclude: race.dontInclude
 						});
-                        setSelectedSubrace({
-                            name: "No Subrace",
-                            str: 0,
-                            dex: 0,
-                            con: 0,
-                            int: 0,
-                            wis: 0,
-                            cha: 0,
-                            dontInclude: true,
-                        });
+                        setSelectedSubrace(defaultScore);
 					}
 				})
 			}
 		>
 			{races &&
-				races.map((race) => <option key={race.name}>{race.name}</option>)}
+				races.map((race) => <option value={race.name}>{race.name}</option>)}
 		</select>
 	);
 }

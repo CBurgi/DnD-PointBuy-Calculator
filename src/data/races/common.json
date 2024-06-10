@@ -1,17 +1,4 @@
 [
-    {
-        "name": "select race",
-		"mod": false,
-        "min": 0,
-        "max": -1,
-        "points": 0,
-        "str": 0,
-        "dex": 0,
-        "con": 0,
-        "int": 0,
-        "wis": 0,
-        "cha": 0
-    },
 	{
 		"name": "Dragonborn",
         "str": 2,
@@ -21,10 +8,6 @@
 		"name": "Dwarf",
         "con": 2,
         "subraces":[
-            {
-                "name": "No Subrace",
-                "dontInclude": true
-            },
             {
                 "name": "Hill Dwarf",
                 "wis": 1
@@ -36,13 +19,6 @@
             {
                 "name": "Mark of Warding",
                 "int": 1
-            },
-            {
-                "name": "Custom",
-                "mod": true,
-                "min": -1,
-                "max": -1,
-                "points": -1
             }
         ]
 	},
@@ -50,10 +26,6 @@
 		"name": "Elf",
         "dex": 2,
         "subraces":[
-            {
-                "name": "No Subrace",
-                "dontInclude": true
-            },
             {
                 "name": "Dark Elf",
                 "cha": 1
@@ -73,13 +45,6 @@
             {
                 "name": "Mark of Shadow",
                 "cha": 1
-            },
-            {
-                "name": "Custom",
-                "mod": true,
-                "min": -1,
-                "max": -1,
-                "points": -1
             }
         ]
 	},
@@ -87,10 +52,6 @@
 		"name": "Gnome",
         "int": 2,
         "subraces":[
-            {
-                "name": "No Subrace",
-                "dontInclude": true
-            },
             {
                 "name": "Forest Gnome",
                 "dex": 1
@@ -102,13 +63,6 @@
             {
                 "name": "Mark of Scribing",
                 "cha": 1
-            },
-            {
-                "name": "Custom",
-                "mod": true,
-                "min": -1,
-                "max": -1,
-                "points": -1
             }
         ]
 	},
@@ -129,10 +83,6 @@
         "name": "Halfling",
         "dex": 2,
         "subraces":[
-            {
-                "name": "No Subrace",
-                "dontInclude": true
-            },
             {
                 "name": "Lightfoot",
                 "cha": 1
@@ -155,13 +105,6 @@
             },{
                 "name": "Mark of Healing",
                 "wis": 1
-            },
-            {
-                "name": "Custom",
-                "mod": true,
-                "min": -1,
-                "max": -1,
-                "points": -1
             }
         ]
     },
@@ -184,10 +127,6 @@
         "name": "Tiefling",
         "cha": 2,
         "subraces":[
-            {
-                "name": "No Subrace",
-                "dontInclude": true
-            },
             {
                 "name": "Bloodline of Asmodeus",
                 "int": 1
@@ -225,12 +164,5 @@
                 "str": 1
             }
         ]
-    },
-    {
-        "name": "Custom",
-        "mod": true,
-        "min": -1,
-        "max": -1,
-        "points": -1
     }
 ]
