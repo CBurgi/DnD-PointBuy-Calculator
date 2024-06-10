@@ -7,8 +7,7 @@ export const IncrementScore = (modifier, setter, score) => {
 			min = modifier.str < pointDoubleThreshold ? 1 : 2;
 			if ((modifier.points > -1 && modifier.points < min)) return;
             if (modifier.points > -1 ) modifier.points -= min;
-            
-			// setter({ ...modifier, str: modifier.str + 1 });
+			setter({ ...modifier, str: modifier.str + 1 });
 			return;
 		case "dex":
 			min = modifier.dex < pointDoubleThreshold ? 1 : 2;
