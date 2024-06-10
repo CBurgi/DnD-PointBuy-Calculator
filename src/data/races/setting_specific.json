@@ -31,6 +31,10 @@
         "dex": 2,
         "subraces":[
             {
+                "name": "No Subrace",
+                "dontInclude": true
+            },
+            {
                 "name": "Ibis-Headed Aven",
                 "int": 1
             },
@@ -54,6 +58,10 @@
         "name": "Mefolk",
         "cha": 1,
         "subraces": [
+            {
+                "name": "No Subrace",
+                "dontInclude": true
+            },
             {
                 "name": "Green Merfolk",
                 "wis": 2

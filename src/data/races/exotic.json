@@ -9,7 +9,8 @@
         "cha": 2,
         "subraces":[
             {
-                "name": "No Subrace"
+                "name": "No Subrace",
+                "dontInclude": true
             },
             {
                 "name": "Protector",

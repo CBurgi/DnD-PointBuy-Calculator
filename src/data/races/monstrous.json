@@ -47,7 +47,8 @@
         "name": "Shifter",
         "subraces":[
             {
-                "name": "No Subrace"
+                "name": "No Subrace",
+                "dontInclude": true
             },
             {
                 "name": "Beasthide",

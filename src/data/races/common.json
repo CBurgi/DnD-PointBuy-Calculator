@@ -22,7 +22,8 @@
         "con": 2,
         "subraces":[
             {
-                "name": "No Subrace"
+                "name": "No Subrace",
+                "dontInclude": true
             },
             {
                 "name": "Hill Dwarf",
@@ -50,7 +51,8 @@
         "dex": 2,
         "subraces":[
             {
-                "name": "No Subrace"
+                "name": "No Subrace",
+                "dontInclude": true
             },
             {
                 "name": "Dark Elf",
@@ -86,7 +88,8 @@
         "int": 2,
         "subraces":[
             {
-                "name": "No Subrace"
+                "name": "No Subrace",
+                "dontInclude": true
             },
             {
                 "name": "Forest Gnome",
@@ -127,7 +130,8 @@
         "dex": 2,
         "subraces":[
             {
-                "name": "No Subrace"
+                "name": "No Subrace",
+                "dontInclude": true
             },
             {
                 "name": "Lightfoot",
@@ -181,7 +185,8 @@
         "cha": 2,
         "subraces":[
             {
-                "name": "No Subrace"
+                "name": "No Subrace",
+                "dontInclude": true
             },
             {
                 "name": "Bloodline of Asmodeus",

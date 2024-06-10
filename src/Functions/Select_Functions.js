@@ -30,7 +30,7 @@ export function RaceSelect({ races, setSelectedRace, setSelectedSubrace }) {
                             int: 0,
                             wis: 0,
                             cha: 0,
-                            dontInclude: race.subraces ? false : true,
+                            dontInclude: true,
                         });
 					}
 				})
@@ -65,6 +65,7 @@ export function SubRaceSelect({ selectedRace, setSelectedSubrace }) {
 								int: subrace.int ? subrace.int : 0,
 								wis: subrace.wis ? subrace.wis : 0,
 								cha: subrace.cha ? subrace.cha : 0,
+                                dontInclude: subrace.dontInclude,
 							});
 						}
 					})
