@@ -172,10 +172,10 @@ function RenderCells({ row, setter }) {
 	];
 	return cells.map((cell) => {
 		if (!row.mod || (row.blocked && row.blocked.includes(cell.score))) {
-			return <td>{cell.value ? cell.value : 0}</td>;
+			return <td key={cell.score}>{cell.value ? cell.value : 0}</td>;
 		}
 		return (
-			<td>
+			<td key={cell.score}>
 				<table>
                     <tbody>
 					<tr>

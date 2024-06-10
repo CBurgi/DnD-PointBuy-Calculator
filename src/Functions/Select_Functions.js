@@ -36,7 +36,7 @@ export function RaceSelect({ races, setSelectedRace, setSelectedSubrace }) {
 			}
 		>
 			{races &&
-				races.map((race) => <option value={race.name}>{race.name}</option>)}
+				races.map((race) => <option key={race.name}>{race.name}</option>)}
 		</select>
 	);
 }
