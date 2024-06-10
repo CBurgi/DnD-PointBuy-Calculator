@@ -1,0 +1,33 @@
+[
+    {
+        "name": "class1"
+    },
+    {
+        "name": "class2",
+        "asi":[
+            {
+                "name": 4,
+                "mod": true,
+                "max": 2,
+                "points": 2
+            }
+        ]
+    },
+    {
+        "name": "class3",
+        "asi":[
+            {
+                "name": 4,
+                "mod": true,
+                "max": 2,
+                "points": 2
+            },
+            {
+                "name": 8,
+                "mod": true,
+                "max": 2,
+                "points": 2
+            }
+        ]
+    }
+]

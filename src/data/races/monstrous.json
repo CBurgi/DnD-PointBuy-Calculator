@@ -1,0 +1,78 @@
+[
+    {
+        "name": "Bugbear",
+        "str": 2,
+        "dex": 1
+    },
+    {
+        "name": "Centaur",
+        "str": 2,
+        "wis": 1
+    },
+    {
+        "name": "Goblin",
+        "dex": 2,
+        "con": 1
+    },
+    {
+        "name": "Grung",
+        "dex": 2,
+        "con": 1
+    },
+    {
+        "name": "Hobgoblin",
+        "con": 2,
+        "int": 1
+    },
+    {
+        "name": "Kobold",
+        "dex": 2
+    },
+    {
+        "name": "Lizardfolk",
+        "con": 2,
+        "wis": 1
+    },
+    {
+        "name": "Minotaur",
+        "str": 2,
+        "con": 1
+    },
+    {
+        "name": "Orc",
+        "str": 2,
+        "con": 1
+    },
+    {
+        "name": "Shifter",
+        "subraces":[
+            {
+                "name": "No Subrace"
+            },
+            {
+                "name": "Beasthide",
+                "con": 2,
+                "str": 1
+            },
+            {
+                "name": "Longtooth",
+                "str": 2,
+                "dex": 1
+            },
+            {
+                "name": "Swiftstride",
+                "dex": 2,
+                "cha": 1
+            },
+            {
+                "name": "Wildhunt",
+                "wis": 2
+            }
+        ]
+    },
+    {
+        "name": "Yuan-Ti",
+        "cha": 2,
+        "int": 1
+    }
+]
