@@ -177,6 +177,7 @@ function RenderCells({ row, setter }) {
 		return (
 			<td>
 				<table>
+                    <tbody>
 					<tr>
 						<td />
 						<td>{cell.value ? cell.value : 0}</td>
@@ -184,9 +185,7 @@ function RenderCells({ row, setter }) {
 							<button
 								onClick={() => {
 									if (row.max < 0 || cell.value < row.max) {
-                                        console.log(row)
 										IncrementScore(row, setter, cell.score);
-                                        console.log(row)
 									}
 								}}
 							>
@@ -203,6 +202,7 @@ function RenderCells({ row, setter }) {
 							</button>
 						</td>
 					</tr>
+                    </tbody>
 				</table>
 			</td>
 		);
