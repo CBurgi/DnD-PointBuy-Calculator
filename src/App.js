@@ -6,7 +6,7 @@ import monstrousRaces from ".//data/races/monstrous";
 import settingSpecificRaces from ".//data/races/setting_specific";
 import { RaceSelect, SubRaceSelect } from "./Functions/Select_Functions";
 import { GenerateTable } from "./Functions/Table_Functions";
-import { getScore, setScore, setAbility, IncrementAbility, DecrementAbility } from "./Functions/Mod_Functions";
+import { getScore, setScore, setAbility, IncrementAbility, DecrementAbility } from "./Functions/Score_Functions";
 
 export const defaultAbilityScore = {
 	mod: true,
@@ -40,7 +40,7 @@ export const defaultScore = {
 export const tempScore = {
 	dontInclude: true,
 	name: "[temp]",
-	mod: false,
+	mod: true,
 	min: 0,
 	max: -1,
 	points: -1,
@@ -73,12 +73,9 @@ function App() {
 	// const [selectedSubrace, setSelectedSubrace] = useState(defaultScore);
 
     const [scores, setScores] = useState([
-        // Object.assign({}, defaultScore, {key: "ability"}),
-        // Object.assign({}, defaultScore, {key: "race"}),
-        // Object.assign({}, defaultScore, {key: "subrace"}),
         {...defaultScore, key: "ability"},
         {...defaultScore, key: "race"},
-
+        {...defaultScore, key: "subrace"},
     ])
 
 	const [totalScore, setTotalScore] = useState({
