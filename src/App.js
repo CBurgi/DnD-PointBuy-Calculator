@@ -6,6 +6,7 @@ import monstrousRaces from ".//data/races/monstrous";
 import settingSpecificRaces from ".//data/races/setting_specific";
 import { RaceSelect, SubRaceSelect } from "./Functions/Select_Functions";
 import { GenerateTable } from "./Functions/Table_Functions";
+import { getScore, setScore, IncrementScore, DecrementScore } from "./Functions/Mod_Functions";
 
 export const defaultAbilityScore = {
 	mod: true,
@@ -24,10 +25,11 @@ export const defaultAbilityScore = {
 export const defaultScore = {
 	dontInclude: true,
 	name: "[select]",
-	mod: false,
+	mod: true,
 	min: 0,
-	max: -1,
-	points: -1,
+	max: 3,
+	points: 5,
+    maxPoints: 5,
 	str: 0,
 	dex: 0,
 	con: 0,
@@ -45,7 +47,7 @@ export const customScore = {
 };
 
 function App() {
-	const [abilityScore, setAbilityScore] = useState(defaultAbilityScore);
+	// const [abilityScore, setAbilityScore] = useState(defaultAbilityScore);
 
 	const races = commonRaces.concat(
 		exoticRaces,
@@ -55,9 +57,18 @@ function App() {
 	races.unshift(defaultScore);
 	races.push(customScore);
 
-	const [selectedRace, setSelectedRace] = useState(defaultScore);
+	// const [selectedRace, setSelectedRace] = useState(defaultScore);
 
-	const [selectedSubrace, setSelectedSubrace] = useState(defaultScore);
+	// const [selectedSubrace, setSelectedSubrace] = useState(defaultScore);
+
+    const [scores, setScores] = useState([
+        // Object.assign({}, defaultScore, {key: "ability"}),
+        // Object.assign({}, defaultScore, {key: "race"}),
+        // Object.assign({}, defaultScore, {key: "subrace"}),
+        {...defaultScore, key: "ability"},
+        {...defaultScore, key: "race"},
+
+    ])
 
 	const [totalScore, setTotalScore] = useState({
 		str: 0,
@@ -68,20 +79,31 @@ function App() {
 		cha: 0,
 	});
 	useEffect(() => {
-		setTotalScore({
-			str: selectedRace.str + selectedSubrace.str + abilityScore.str,
-			dex: selectedRace.dex + selectedSubrace.dex + abilityScore.dex,
-			con: selectedRace.con + selectedSubrace.con + abilityScore.con,
-			int: selectedRace.int + selectedSubrace.int + abilityScore.int,
-			wis: selectedRace.wis + selectedSubrace.wis + abilityScore.wis,
-			cha: selectedRace.cha + selectedSubrace.cha + abilityScore.cha,
-		});
-	}, [selectedRace, selectedSubrace, abilityScore]);
+		// setTotalScore({
+		// 	str: selectedRace.str + selectedSubrace.str + abilityScore.str,
+		// 	dex: selectedRace.dex + selectedSubrace.dex + abilityScore.dex,
+		// 	con: selectedRace.con + selectedSubrace.con + abilityScore.con,
+		// 	int: selectedRace.int + selectedSubrace.int + abilityScore.int,
+		// 	wis: selectedRace.wis + selectedSubrace.wis + abilityScore.wis,
+		// 	cha: selectedRace.cha + selectedSubrace.cha + abilityScore.cha,
+		// });
+        setTotalScore({})
+        scores.map((score) => {
+            setTotalScore({
+                str: score.str,
+                dex: score.dex,
+                con: score.con,
+                int: score.int,
+                wis: score.wis,
+                cha: score.cha,
+            })
+        })
+	}, [scores]);
 
 	return (
 		<div className="App">
 			<h1>D&D Ability Score Calculator</h1>
-			<RaceSelect
+			{/* <RaceSelect
 				races={races}
 				setSelectedRace={setSelectedRace}
 				setSelectedSubrace={setSelectedSubrace}
@@ -99,7 +121,14 @@ function App() {
 				setSelectedSubrace={setSelectedSubrace}
 				totalScore={totalScore}
 				setTotalScore={setTotalScore}
-			/>
+			/> */}
+            <button onClick={() => IncrementScore(scores, setScores, "race", "str")}>race.str ++</button>
+            <button onClick={() => DecrementScore(scores, setScores, "race", "str")}>race.str --</button>
+            <button onClick={() => IncrementScore(scores, setScores, "race", "dex")}>race.dex ++</button>
+            <button onClick={() => DecrementScore(scores, setScores, "race", "dex")}>race.dex --</button>
+            <button onClick={() => setScore(scores, setScores, "race", "all", 0, true)}>reset</button>
+
+            <p>str = {getScore(scores, "race").str}, dex = {getScore(scores, "race").dex}, points = {getScore(scores, "race").points}</p>
 		</div>
 	);
 }

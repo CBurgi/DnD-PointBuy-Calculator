@@ -1,96 +1,84 @@
 const pointDoubleThreshold = 13;
+const abilities = ["str", "dex", "con", "int", "wis", "cha"];
 
-export const IncrementScore = (modifier, setter, score) => {
-	let min = 0;
-	switch (score) {
-		case "str":
-			min = modifier.str < pointDoubleThreshold ? 1 : 2;
-			if ((modifier.points > -1 && modifier.points < min)) return;
-            if (modifier.points > -1 ) modifier.points -= min;
-			setter({ ...modifier, str: modifier.str + 1 });
-			return;
-		case "dex":
-			min = modifier.dex < pointDoubleThreshold ? 1 : 2;
-			if (modifier.points > -1 && modifier.points < min) return;
-            if (modifier.points > -1 ) modifier.points -= min;
-			setter({ ...modifier, dex: modifier.dex + 1 });
-			return;
-		case "con":
-			min = modifier.con < pointDoubleThreshold ? 1 : 2;
-			if (modifier.points > -1 && modifier.points < min) return;
-            if (modifier.points > -1 ) modifier.points -= min;
-			setter({ ...modifier, con: modifier.con + 1 });
-			return;
-		case "int":
-			min = modifier.int < pointDoubleThreshold ? 1 : 2;
-			if (modifier.points > -1 && modifier.points < min) return;
-            if (modifier.points > -1 ) modifier.points -= min;
-			setter({ ...modifier, int: modifier.int + 1 });
-			return;
-		case "wis":
-			min = modifier.wis < pointDoubleThreshold ? 1 : 2;
-			if (modifier.points > -1 && modifier.points < min) return;
-            if (modifier.points > -1 ) modifier.points -= min;
-			setter({ ...modifier, wis: modifier.wis + 1 });
-			return;
-		case "cha":
-			min = modifier.cha < pointDoubleThreshold ? 1 : 2;
-			if (modifier.points > -1 && modifier.points < min) return;
-            if (modifier.points > -1 ) modifier.points -= min;
-			setter({ ...modifier, cha: modifier.cha + 1 });
-			return;
-		default:
-			return;
+/**
+ * Returns the requested score from an array of scores
+ * @param {Array} scores 
+ * @param {String} score 
+ * @returns {Object} The score requested from the array.
+ */
+export const getScore = (scores, score) => {
+	return scores.find((s) => s.key === score);
+};
+/**
+ * Sets the requested variable of the requested score to the passed value
+ * @param {Array} scores 
+ * @param {Function} setScores 
+ * @param {String} score 
+ * @param {String} variable Pass "all" to set all abilities
+ * @param {any} value 
+ * @param {Boolean} reset @default false Pass true to reset the score's points
+ */
+export const setScore = (scores, setScores, score, variable, value, reset = false) => {
+	const nextScores = [...scores];
+	const scoreA = nextScores.find((s) => s.key === score);
+	if ((variable = "all")) abilities.forEach(ability => scoreA[ability] = value);
+	else scoreA[variable] = value;
+    if(reset) scoreA.points = scoreA.maxPoints
+	setScores(nextScores);
+};
+/**
+ * Increments the requested variable of the requested score
+ * @param {Array} scores 
+ * @param {Function} setScores 
+ * @param {String} score 
+ * @param {String} variable
+ * @returns {Boolean} Whether or not the variable was incremented
+ */
+export const IncrementScore = (scores, setScores, score, variable) => {
+	const nextScores = [...scores];
+	const scoreA = nextScores.find((s) => s.key === score);
+	let minPoints = scoreA.str < pointDoubleThreshold ? 1 : 2;
+	if (
+        scoreA[variable] >= scoreA.max ||
+		(scoreA.points > -1 && scoreA.points < minPoints) ||
+		!scoreA.mod ||
+		!abilities.includes(variable)
+	)
+		return false;
+	if (scoreA.points > -1) scoreA.points -= minPoints;
+	scoreA[variable]++;
+	setScores(nextScores);
+    return true;
+};
+/**
+ * Decrements the requested variable of the requested score
+ * @param {Array} scores 
+ * @param {Function} setScores 
+ * @param {String} score 
+ * @param {String} variable
+ * @returns {Boolean} Whether or not the variable was decremented
+ */
+export const DecrementScore = (scores, setScores, score, variable) => {
+	const nextScores = [...scores];
+	const scoreA = nextScores.find((s) => s.key === score);
+	let minPoints = scoreA.str < pointDoubleThreshold ? 1 : 2;
+	if (
+        scoreA[variable] <= scoreA.min ||
+		(scoreA.points > -1 && scoreA.points > scoreA.maxPoints - minPoints) ||
+		!scoreA.mod ||
+		!abilities.includes(variable)
+	)
+		return;
+	if (scoreA.points > -1) scoreA.points += minPoints;
+	scoreA[variable]--;
+	setScores(nextScores);
+};
+
+export function CalculatePointCost({ score }) {
+	let cost = 0;
+	for (let i = score; i > 8; i--) {
+		cost += i <= pointDoubleThreshold ? 1 : 2;
 	}
-};
-export const DecrementScore = (modifier, setter, score) => {
-	switch (score) {
-		case "str":
-            if (modifier.points > -1 ) modifier.points += modifier.str <= pointDoubleThreshold ? 1 : 2;
-			setter({ ...modifier, str: modifier.str - 1 });
-			return;
-            case "dex":
-            if (modifier.points > -1 ) modifier.points += modifier.dex <= pointDoubleThreshold ? 1 : 2;
-			setter({ ...modifier, dex: modifier.dex - 1 });
-			return;
-            case "con":
-            if (modifier.points > -1 ) modifier.points += modifier.con <= pointDoubleThreshold ? 1 : 2;
-			setter({ ...modifier, con: modifier.con - 1 });
-			return;
-            case "int":
-            if (modifier.points > -1 ) modifier.points += modifier.int <= pointDoubleThreshold ? 1 : 2;
-			setter({ ...modifier, int: modifier.int - 1 });
-			return;
-            case "wis":
-            if (modifier.points > -1 ) modifier.points += modifier.wis <= pointDoubleThreshold ? 1 : 2;
-			setter({ ...modifier, wis: modifier.wis - 1 });
-			return;
-            case "cha":
-            if (modifier.points > -1 ) modifier.points += modifier.cha <= pointDoubleThreshold ? 1 : 2;
-			setter({ ...modifier, cha: modifier.cha - 1 });
-			return;
-		default:
-			return;
-	}
-};
-
-export const ResetScore = (modifier, setter, resetVal) => {
-    setter({
-        ...modifier,
-        points: modifier.points > -1 ? modifier.maxPoints : -1,
-        str: resetVal,
-        dex: resetVal,
-        con: resetVal,
-        int: resetVal,
-        wis: resetVal,
-        cha: resetVal,
-    })
-};
-
-export function CalculatePointCost({score}){
-    let cost = 0;
-    for(let i = score; i > 8; i--){
-        cost += (i <= pointDoubleThreshold ? 1 : 2);
-    }
-    return cost;
+	return cost;
 }

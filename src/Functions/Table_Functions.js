@@ -12,7 +12,7 @@
 import {
 	IncrementScore,
 	DecrementScore,
-	ResetScore,
+	// ResetScore,
 	CalculatePointCost,
 } from "./Mod_Functions";
 
@@ -81,7 +81,7 @@ function GenerateScoreRow({ abilityScore, setAbilityScore }) {
 				<td>
 					<button
 						onClick={() => {
-							ResetScore(abilityScore, setAbilityScore, 8);
+							// ResetScore(abilityScore, setAbilityScore, 8);
 						}}
 					>
 						Reset Scores
