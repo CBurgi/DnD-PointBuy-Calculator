@@ -11,6 +11,21 @@ export const getScore = (scores, score) => {
 	return scores.find((s) => s.key === score);
 };
 /**
+ * Sets requested score to the passed new score
+ * @param {Array} scores 
+ * @param {Function} setScores 
+ * @param {String} score 
+ * @param {Object} newScore
+ */
+export const setScore = (scores, setScores, score, newScore) =>{
+    let nextScores = [...scores];
+	const scoreA = nextScores.find((s) => s.key === score);
+    const scoreB = Object.assign({}, scoreA, newScore)
+    nextScores = nextScores.filter((score) => {return score.key != scoreA.key})
+    nextScores.push(scoreB)
+    setScores(nextScores)
+}
+/**
  * Sets the requested variable of the requested score to the passed value
  * @param {Array} scores 
  * @param {Function} setScores 
@@ -19,7 +34,7 @@ export const getScore = (scores, score) => {
  * @param {any} value 
  * @param {Boolean} reset @default false Pass true to reset the score's points
  */
-export const setScore = (scores, setScores, score, variable, value, reset = false) => {
+export const setAbility = (scores, setScores, score, variable, value, reset = false) => {
 	const nextScores = [...scores];
 	const scoreA = nextScores.find((s) => s.key === score);
 	if ((variable = "all")) abilities.forEach(ability => scoreA[ability] = value);
@@ -35,7 +50,7 @@ export const setScore = (scores, setScores, score, variable, value, reset = fals
  * @param {String} variable
  * @returns {Boolean} Whether or not the variable was incremented
  */
-export const IncrementScore = (scores, setScores, score, variable) => {
+export const IncrementAbility = (scores, setScores, score, variable) => {
 	const nextScores = [...scores];
 	const scoreA = nextScores.find((s) => s.key === score);
 	let minPoints = scoreA.str < pointDoubleThreshold ? 1 : 2;
@@ -59,7 +74,7 @@ export const IncrementScore = (scores, setScores, score, variable) => {
  * @param {String} variable
  * @returns {Boolean} Whether or not the variable was decremented
  */
-export const DecrementScore = (scores, setScores, score, variable) => {
+export const DecrementAbility = (scores, setScores, score, variable) => {
 	const nextScores = [...scores];
 	const scoreA = nextScores.find((s) => s.key === score);
 	let minPoints = scoreA.str < pointDoubleThreshold ? 1 : 2;

@@ -6,7 +6,7 @@ import monstrousRaces from ".//data/races/monstrous";
 import settingSpecificRaces from ".//data/races/setting_specific";
 import { RaceSelect, SubRaceSelect } from "./Functions/Select_Functions";
 import { GenerateTable } from "./Functions/Table_Functions";
-import { getScore, setScore, IncrementScore, DecrementScore } from "./Functions/Mod_Functions";
+import { getScore, setScore, setAbility, IncrementAbility, DecrementAbility } from "./Functions/Mod_Functions";
 
 export const defaultAbilityScore = {
 	mod: true,
@@ -25,17 +25,27 @@ export const defaultAbilityScore = {
 export const defaultScore = {
 	dontInclude: true,
 	name: "[select]",
-	mod: true,
+	mod: false,
 	min: 0,
-	max: 3,
-	points: 5,
-    maxPoints: 5,
+	max: -1,
+	points: -1,
+    maxPoints: -1,
 	str: 0,
 	dex: 0,
 	con: 0,
 	int: 0,
 	wis: 0,
 	cha: 0,
+};
+export const tempScore = {
+	dontInclude: true,
+	name: "[temp]",
+	mod: false,
+	min: 0,
+	max: -1,
+	points: -1,
+    maxPoints: -1,
+	str: 7,
 };
 
 export const customScore = {
@@ -44,6 +54,7 @@ export const customScore = {
 	min: -1,
 	max: -1,
 	points: -1,
+    maxPoints: -1,
 };
 
 function App() {
@@ -122,13 +133,15 @@ function App() {
 				totalScore={totalScore}
 				setTotalScore={setTotalScore}
 			/> */}
-            <button onClick={() => IncrementScore(scores, setScores, "race", "str")}>race.str ++</button>
-            <button onClick={() => DecrementScore(scores, setScores, "race", "str")}>race.str --</button>
-            <button onClick={() => IncrementScore(scores, setScores, "race", "dex")}>race.dex ++</button>
-            <button onClick={() => DecrementScore(scores, setScores, "race", "dex")}>race.dex --</button>
-            <button onClick={() => setScore(scores, setScores, "race", "all", 0, true)}>reset</button>
+            <button onClick={() => setScore(scores, setScores, "race", tempScore)}>change temp</button><br/>
+            <button onClick={() => setScore(scores, setScores, "race", defaultScore)}>change default</button><br/>
+            <button onClick={() => IncrementAbility(scores, setScores, "race", "str")}>race.str ++</button>
+            <button onClick={() => DecrementAbility(scores, setScores, "race", "str")}>race.str --</button>
+            <button onClick={() => IncrementAbility(scores, setScores, "race", "dex")}>race.dex ++</button>
+            <button onClick={() => DecrementAbility(scores, setScores, "race", "dex")}>race.dex --</button>
+            <button onClick={() => setAbility(scores, setScores, "race", "all", 0, true)}>reset</button>
 
-            <p>str = {getScore(scores, "race").str}, dex = {getScore(scores, "race").dex}, points = {getScore(scores, "race").points}</p>
+            <p>{getScore(scores, "race").name}: str = {getScore(scores, "race").str}, dex = {getScore(scores, "race").dex}, points = {getScore(scores, "race").points}</p>
 		</div>
 	);
 }

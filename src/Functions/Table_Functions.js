@@ -10,8 +10,8 @@
 */
 
 import {
-	IncrementScore,
-	DecrementScore,
+	IncrementAbility,
+	DecrementAbility,
 	// ResetScore,
 	CalculatePointCost,
 } from "./Mod_Functions";
@@ -185,7 +185,7 @@ function RenderCells({ row, setter }) {
 							<button
 								onClick={() => {
 									if (row.max < 0 || cell.value < row.max) {
-										IncrementScore(row, setter, cell.score);
+										IncrementAbility(row, setter, cell.score);
 									}
 								}}
 							>
@@ -194,7 +194,7 @@ function RenderCells({ row, setter }) {
 							<button
 								onClick={() => {
 									if (row.min < 0 || cell.value > row.min) {
-										DecrementScore(row, setter, cell.score);
+										DecrementAbility(row, setter, cell.score);
 									}
 								}}
 							>
