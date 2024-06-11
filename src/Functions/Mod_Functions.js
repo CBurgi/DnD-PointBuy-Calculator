@@ -69,10 +69,11 @@ export const DecrementScore = (scores, setScores, score, variable) => {
 		!scoreA.mod ||
 		!abilities.includes(variable)
 	)
-		return;
+		return false;
 	if (scoreA.points > -1) scoreA.points += minPoints;
 	scoreA[variable]--;
 	setScores(nextScores);
+    return true;
 };
 
 export function CalculatePointCost({ score }) {
