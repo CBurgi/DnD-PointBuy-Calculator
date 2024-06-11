@@ -21,7 +21,7 @@ export const setScore = (scores, setScores, score, newScore) =>{
     let nextScores = [...scores];
 	const scoreA = nextScores.find((s) => s.key === score);
     const scoreB = Object.assign({}, scoreA, newScore)
-    nextScores = nextScores.filter((score) => {return score.key != scoreA.key})
+    nextScores = nextScores.filter((score) => {return score.key !== scoreA.key})
     nextScores.push(scoreB)
     setScores(nextScores)
 }
@@ -51,15 +51,15 @@ export const setAbility = (scores, setScores, score, variable, value, reset = fa
  * @returns {Boolean} Whether or not the variable was incremented
  */
 export const IncrementAbility = (scores, setScores, score, variable) => {
-	const nextScores = [...scores];
+    const nextScores = [...scores];
 	const scoreA = nextScores.find((s) => s.key === score);
 	let minPoints = scoreA.str < pointDoubleThreshold ? 1 : 2;
 	if (
-        scoreA[variable] >= scoreA.max ||
+        (scoreA.max > -1 && scoreA[variable] >= scoreA.max) ||
 		(scoreA.points > -1 && scoreA.points < minPoints) ||
 		!scoreA.mod ||
 		!abilities.includes(variable)
-	)
+        )
 		return false;
 	if (scoreA.points > -1) scoreA.points -= minPoints;
 	scoreA[variable]++;
@@ -79,7 +79,7 @@ export const DecrementAbility = (scores, setScores, score, variable) => {
 	const scoreA = nextScores.find((s) => s.key === score);
 	let minPoints = scoreA.str < pointDoubleThreshold ? 1 : 2;
 	if (
-        scoreA[variable] <= scoreA.min ||
+        (scoreA.min > -1 && scoreA[variable] <= scoreA.min) ||
 		(scoreA.points > -1 && scoreA.points > scoreA.maxPoints - minPoints) ||
 		!scoreA.mod ||
 		!abilities.includes(variable)
