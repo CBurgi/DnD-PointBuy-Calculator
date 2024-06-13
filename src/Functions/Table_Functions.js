@@ -11,11 +11,10 @@
 
 import {
 	getScore,
-	setAbility,
 	IncrementAbility,
 	DecrementAbility,
 	CalculatePointCost,
-    setScore,
+	setScore,
 } from "./Score_Functions";
 import { abilities } from "../App";
 
@@ -63,15 +62,6 @@ function GeneratePointbuyRow({ scores, setScores }) {
 			<tr className="table-odd-row">
 				<td>Ability Score</td>
 				<RenderCells scores={scores} setScores={setScores} score={"ability"} />
-				{/* <td>
-					<button
-						onClick={() => {
-							setAbility(setScores, "ability", "all", 8, true);
-						}}
-					>
-						Reset Scores
-					</button>
-				</td> */}
 			</tr>
 			<tr className="even-row">
 				<td>Point Cost</td>
@@ -84,10 +74,6 @@ function GeneratePointbuyRow({ scores, setScores }) {
 						</td>
 					);
 				})}
-				{/* <td>
-					{getScore(scores, "ability").points}/
-					{getScore(scores, "ability").maxPoints} Points Left
-				</td> */}
 			</tr>
 		</>
 	);
@@ -111,7 +97,9 @@ function GenerateTotalRow({ totalScore }) {
 			<tr className="table-odd-row">
 				<td>Ability Modifier</td>
 				{abilities.map((ability) => {
-					return <td key={ability}>{Math.floor((totalScore[ability] - 10) / 2)}</td>
+					return (
+						<td key={ability}>{Math.floor((totalScore[ability] - 10) / 2)}</td>
+					);
 				})}
 			</tr>
 		</>
@@ -149,67 +137,90 @@ function GenerateRow({ leadRow = "+", scoreName, score, scores, setScores }) {
 function RenderCells({ scores, setScores, score }) {
 	const row = getScore(scores, score);
 	return (
-        <>
-        {abilities.map((ability) => {
-		if (!row.mod || (row.blocked && row.blocked.includes(ability))) {
-			return <td key={ability}>{row[ability]}</td>;
-		}
-		return (
-			<td key={ability}>
-				<table>
-					<tbody>
-						<tr>
-							<td />
-							<td>{row[ability]}</td>
-							<td className="ud-button">
-								<table>
-									<tbody>
-										<tr>
-											<td>
-												<button
-													onClick={() => {
-														IncrementAbility(scores, setScores, score, ability);
-													}}
-												>
-													▲
-												</button>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<button
-													onClick={() => {
-														DecrementAbility(scores, setScores, score, ability);
-													}}
-												>
-													▼
-												</button>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</td>
-		);
-        })
-        
-        }
-        {row.mod ? <td><table><tbody><tr><td>
-					{row.points}/
-					{row.maxPoints} Points Left
-                    </td>
-                    </tr><tr>
-                    <td><button
-                    onClick={() => {
-                        // setAbility(setScores, "ability", "all", 8, true);
-                        const baseScore = {...row.base}
-                        setScore(setScores, row.key, baseScore)
-                    }}
-                >Reset Scores</button></td></tr></tbody></table></td> : <></>
+		<>
+			{abilities.map((ability) => {
+				if (!row.mod || (row.blocked && row.blocked.includes(ability))) {
+					return <td key={ability}>{row[ability]}</td>;
 				}
-    </>
-    )
+				return (
+					<td key={ability}>
+						<table>
+							<tbody>
+								<tr>
+									<td />
+									<td>{row[ability]}</td>
+									<td className="ud-button">
+										<table>
+											<tbody>
+												<tr>
+													<td>
+														<button
+															onClick={() => {
+																IncrementAbility(
+																	scores,
+																	setScores,
+																	score,
+																	ability
+																);
+															}}
+														>
+															▲
+														</button>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<button
+															onClick={() => {
+																DecrementAbility(
+																	scores,
+																	setScores,
+																	score,
+																	ability
+																);
+															}}
+														>
+															▼
+														</button>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				);
+			})}
+			{row.mod ? (
+				<td>
+					<table>
+						<tbody>
+							<tr>
+								<td>
+									{row.points}/{row.maxPoints} Points Left
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<button
+										onClick={() => {
+											// setAbility(setScores, "ability", "all", 8, true);
+											const baseScore = { ...row.base };
+											setScore(setScores, row.key, baseScore);
+										}}
+									>
+										Reset Scores
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			) : (
+				<></>
+			)}
+		</>
+	);
 }

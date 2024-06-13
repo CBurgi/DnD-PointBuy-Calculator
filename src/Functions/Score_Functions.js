@@ -37,7 +37,11 @@ export const setScore = (setScores, score, newScore) => {
 	setScores((scores) => {
 		let nextScores = [...scores];
 		const scoreA = nextScores.find((s) => s.key === score);
-		const scoreB = Object.assign({}, clearScore, newScore, { key: score, maxPoints: newScore.points, base: newScore });
+		const scoreB = Object.assign({}, clearScore, newScore, {
+			key: score,
+			maxPoints: newScore.points,
+			base: newScore,
+		});
 		nextScores = nextScores.filter((s) => {
 			return s.key !== scoreA.key;
 		});
@@ -67,7 +71,7 @@ export const deleteScore = (setScores, score) => {
 		let nextScores = [...scores];
 		nextScores = nextScores.filter((s) => {
 			// return s.key !== score;
-            return !(s.key.includes(score))
+			return !s.key.includes(score);
 		});
 		return nextScores;
 	});
