@@ -15,6 +15,7 @@ import {
 	IncrementAbility,
 	DecrementAbility,
 	CalculatePointCost,
+    setScore,
 } from "./Score_Functions";
 import { abilities } from "../App";
 
@@ -50,13 +51,6 @@ export function GenerateTable({ scores, setScores, totalScore }) {
 					scores={scores}
 					setScores={setScores}
 				/>
-				{/* <GenerateRow
-					leadRow="="
-                    scoreName={"Total Score"}
-                    score={"total"}
-                    scores={scores}
-					setScores={setScores}
-				/> */}
 				<GenerateTotalRow totalScore={totalScore} />
 			</tbody>
 		</table>
@@ -69,7 +63,7 @@ function GeneratePointbuyRow({ scores, setScores }) {
 			<tr className="table-odd-row">
 				<td>Ability Score</td>
 				<RenderCells scores={scores} setScores={setScores} score={"ability"} />
-				<td>
+				{/* <td>
 					<button
 						onClick={() => {
 							setAbility(setScores, "ability", "all", 8, true);
@@ -77,7 +71,7 @@ function GeneratePointbuyRow({ scores, setScores }) {
 					>
 						Reset Scores
 					</button>
-				</td>
+				</td> */}
 			</tr>
 			<tr className="even-row">
 				<td>Point Cost</td>
@@ -90,10 +84,10 @@ function GeneratePointbuyRow({ scores, setScores }) {
 						</td>
 					);
 				})}
-				<td>
+				{/* <td>
 					{getScore(scores, "ability").points}/
 					{getScore(scores, "ability").maxPoints} Points Left
-				</td>
+				</td> */}
 			</tr>
 		</>
 	);
@@ -154,7 +148,9 @@ function GenerateRow({ leadRow = "+", scoreName, score, scores, setScores }) {
 
 function RenderCells({ scores, setScores, score }) {
 	const row = getScore(scores, score);
-	return abilities.map((ability) => {
+	return (
+        <>
+        {abilities.map((ability) => {
 		if (!row.mod || (row.blocked && row.blocked.includes(ability))) {
 			return <td key={ability}>{row[ability]}</td>;
 		}
@@ -198,5 +194,22 @@ function RenderCells({ scores, setScores, score }) {
 				</table>
 			</td>
 		);
-	});
+        })
+        
+        }
+        {row.mod ? <td><table><tbody><tr><td>
+					{row.points}/
+					{row.maxPoints} Points Left
+                    </td>
+                    </tr><tr>
+                    <td><button
+                    onClick={() => {
+                        // setAbility(setScores, "ability", "all", 8, true);
+                        const baseScore = {...row.base}
+                        setScore(setScores, row.key, baseScore)
+                    }}
+                >Reset Scores</button></td></tr></tbody></table></td> : <></>
+				}
+    </>
+    )
 }

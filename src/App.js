@@ -67,10 +67,9 @@ function App() {
 	races.push(customScore);
 
     const [scores, setScores] = useState([
-        {...defaultAbilityScore, key: "ability"},
-        {...defaultScore, key: "race"},
-        {...defaultScore, key: "subrace"},
-        {...blankScore, key: "total"}
+        {...defaultAbilityScore, key: "ability", base: defaultAbilityScore},
+        {...defaultScore, key: "race", base: defaultScore},
+        {...defaultScore, key: "subrace", base: defaultScore}
     ])
 
 	const [totalScore, setTotalScore] = useState(blankScore);

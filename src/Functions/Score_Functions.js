@@ -37,7 +37,7 @@ export const setScore = (setScores, score, newScore) => {
 	setScores((scores) => {
 		let nextScores = [...scores];
 		const scoreA = nextScores.find((s) => s.key === score);
-		const scoreB = Object.assign({}, clearScore, newScore, { key: score });
+		const scoreB = Object.assign({}, clearScore, newScore, { key: score, maxPoints: newScore.points, base: newScore });
 		nextScores = nextScores.filter((s) => {
 			return s.key !== scoreA.key;
 		});
@@ -134,7 +134,7 @@ export const DecrementAbility = (scores, setScores, score, variable) => {
 	let minPoints = scoreA[variable] <= pointDoubleThreshold ? 1 : 2;
 	if (
 		(scoreA.min > -1 && scoreA[variable] <= scoreA.min) ||
-		(scoreA.points > -1 && scoreA.points > scoreA.maxPoints - minPoints) ||
+		// (scoreA.points > -1 && scoreA.points > scoreA.maxPoints - minPoints) ||
 		!scoreA.mod ||
 		!abilities.includes(variable)
 	)
