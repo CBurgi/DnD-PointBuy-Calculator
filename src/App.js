@@ -6,7 +6,8 @@ import monstrousRaces from ".//data/races/monstrous";
 import settingSpecificRaces from ".//data/races/setting_specific";
 import { RaceSelect, SubRaceSelect } from "./Functions/Select_Functions";
 import { GenerateTable } from "./Functions/Table_Functions";
-import { getScore, setScore, setAbility, IncrementAbility, DecrementAbility } from "./Functions/Score_Functions";
+
+export const abilities = ["str", "dex", "con", "int", "wis", "cha"];
 
 export const defaultAbilityScore = {
 	mod: true,
@@ -37,15 +38,13 @@ export const defaultScore = {
 	wis: 0,
 	cha: 0,
 };
-export const tempScore = {
-	dontInclude: true,
-	name: "[temp]",
-	mod: true,
-	min: 0,
-	max: -1,
-	points: -1,
-    maxPoints: -1,
-	str: 7,
+export const blankScore = {
+	str: 0,
+    dex: 0,
+    con: 0,
+    int: 0,
+    wis: 0,
+    cha: 0,
 };
 
 export const customScore = {
@@ -58,7 +57,6 @@ export const customScore = {
 };
 
 function App() {
-	// const [abilityScore, setAbilityScore] = useState(defaultAbilityScore);
 
 	const races = commonRaces.concat(
 		exoticRaces,
@@ -68,77 +66,45 @@ function App() {
 	races.unshift(defaultScore);
 	races.push(customScore);
 
-	// const [selectedRace, setSelectedRace] = useState(defaultScore);
-
-	// const [selectedSubrace, setSelectedSubrace] = useState(defaultScore);
-
     const [scores, setScores] = useState([
-        {...defaultScore, key: "ability"},
+        {...defaultAbilityScore, key: "ability"},
         {...defaultScore, key: "race"},
         {...defaultScore, key: "subrace"},
+        {...blankScore, key: "total"}
     ])
 
-	const [totalScore, setTotalScore] = useState({
-		str: 0,
-		dex: 0,
-		con: 0,
-		int: 0,
-		wis: 0,
-		cha: 0,
-	});
+	const [totalScore, setTotalScore] = useState(blankScore);
 	useEffect(() => {
-		// setTotalScore({
-		// 	str: selectedRace.str + selectedSubrace.str + abilityScore.str,
-		// 	dex: selectedRace.dex + selectedSubrace.dex + abilityScore.dex,
-		// 	con: selectedRace.con + selectedSubrace.con + abilityScore.con,
-		// 	int: selectedRace.int + selectedSubrace.int + abilityScore.int,
-		// 	wis: selectedRace.wis + selectedSubrace.wis + abilityScore.wis,
-		// 	cha: selectedRace.cha + selectedSubrace.cha + abilityScore.cha,
-		// });
-        setTotalScore({})
+        setTotalScore((s) => blankScore)
         scores.map((score) => {
-            setTotalScore({
-                str: score.str,
-                dex: score.dex,
-                con: score.con,
-                int: score.int,
-                wis: score.wis,
-                cha: score.cha,
-            })
+            setTotalScore((s) =>{ return {
+                str: s.str + score.str,
+                dex: s.dex + score.dex,
+                con: s.con + score.con,
+                int: s.int + score.int,
+                wis: s.wis + score.wis,
+                cha: s.cha + score.cha,
+        }})
+        return score
         })
 	}, [scores]);
 
 	return (
 		<div className="App">
 			<h1>D&D Ability Score Calculator</h1>
-			{/* <RaceSelect
+			<RaceSelect
 				races={races}
-				setSelectedRace={setSelectedRace}
-				setSelectedSubrace={setSelectedSubrace}
+                setScores={setScores}
 			/>
 			<SubRaceSelect
-				selectedRace={selectedRace}
-				setSelectedSubrace={setSelectedSubrace}
+				scores={scores}
+                setScores={setScores}
 			/>
 			<GenerateTable
-				abilityScore={abilityScore}
-				setAbilityScore={setAbilityScore}
-				selectedRace={selectedRace}
-				setSelectedRace={setSelectedRace}
-				selectedSubrace={selectedSubrace}
-				setSelectedSubrace={setSelectedSubrace}
-				totalScore={totalScore}
-				setTotalScore={setTotalScore}
-			/> */}
-            <button onClick={() => setScore(scores, setScores, "race", tempScore)}>change temp</button><br/>
-            <button onClick={() => setScore(scores, setScores, "race", defaultScore)}>change default</button><br/>
-            <button onClick={() => IncrementAbility(scores, setScores, "race", "str")}>race.str ++</button>
-            <button onClick={() => DecrementAbility(scores, setScores, "race", "str")}>race.str --</button>
-            <button onClick={() => IncrementAbility(scores, setScores, "race", "dex")}>race.dex ++</button>
-            <button onClick={() => DecrementAbility(scores, setScores, "race", "dex")}>race.dex --</button>
-            <button onClick={() => setAbility(scores, setScores, "race", "all", 0, true)}>reset</button>
-
-            <p>{getScore(scores, "race").name}: str = {getScore(scores, "race").str}, dex = {getScore(scores, "race").dex}, points = {getScore(scores, "race").points}</p>
+				scores={scores}
+                setScores={setScores}
+                totalScore={totalScore}
+			/>
 		</div>
 	);
 }

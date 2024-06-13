@@ -10,22 +10,15 @@
 */
 
 import {
+	getScore,
+	setAbility,
 	IncrementAbility,
 	DecrementAbility,
-	// ResetScore,
 	CalculatePointCost,
-} from "./Mod_Functions";
+} from "./Score_Functions";
+import { abilities } from "../App";
 
-export function GenerateTable({
-	abilityScore,
-	setAbilityScore,
-	selectedRace,
-	setSelectedRace,
-	selectedSubrace,
-	setSelectedSubrace,
-	totalScore,
-	setTotalScore,
-}) {
+export function GenerateTable({ scores, setScores, totalScore }) {
 	const headColumnWidth = "20%";
 	const columnWidth = "10%";
 
@@ -44,44 +37,42 @@ export function GenerateTable({
 				</tr>
 			</thead>
 			<tbody className="table-body">
-				<GenerateScoreRow
-					abilityScore={abilityScore}
-					setAbilityScore={setAbilityScore}
+				<GeneratePointbuyRow scores={scores} setScores={setScores} />
+				<GenerateRow
+					scoreName={"Race Bonus"}
+					score={"race"}
+					scores={scores}
+					setScores={setScores}
 				/>
 				<GenerateRow
-					leadRow="+"
-					mainRow={selectedRace}
-					mainRowName={"Race Bonus"}
-					setter={setSelectedRace}
+					scoreName={"Subrace Bonus"}
+					score={"subrace"}
+					scores={scores}
+					setScores={setScores}
 				/>
-				<GenerateRow
-					leadRow="+"
-					mainRow={selectedSubrace}
-					mainRowName={"Subrace Bonus"}
-					setter={setSelectedSubrace}
-				/>
-				<GenerateRow
+				{/* <GenerateRow
 					leadRow="="
-					mainRow={totalScore}
-					mainRowName={"Total Score"}
-					setter={setTotalScore}
-				/>
-				<GenerateModifierRow totalScore={totalScore} />
+                    scoreName={"Total Score"}
+                    score={"total"}
+                    scores={scores}
+					setScores={setScores}
+				/> */}
+				<GenerateTotalRow totalScore={totalScore} />
 			</tbody>
 		</table>
 	);
 }
 
-function GenerateScoreRow({ abilityScore, setAbilityScore }) {
+function GeneratePointbuyRow({ scores, setScores }) {
 	return (
 		<>
 			<tr className="table-odd-row">
 				<td>Ability Score</td>
-				<RenderCells row={abilityScore} setter={setAbilityScore} />
+				<RenderCells scores={scores} setScores={setScores} score={"ability"} />
 				<td>
 					<button
 						onClick={() => {
-							// ResetScore(abilityScore, setAbilityScore, 8);
+							setAbility(setScores, "ability", "all", 8, true);
 						}}
 					>
 						Reset Scores
@@ -90,52 +81,52 @@ function GenerateScoreRow({ abilityScore, setAbilityScore }) {
 			</tr>
 			<tr className="even-row">
 				<td>Point Cost</td>
+				{abilities.map((ability) => {
+					return (
+						<td key={ability}>
+							<CalculatePointCost
+								score={getScore(scores, "ability")[ability]}
+							/>
+						</td>
+					);
+				})}
 				<td>
-					<CalculatePointCost score={abilityScore.str} />
-				</td>
-				<td>
-					<CalculatePointCost score={abilityScore.dex} />
-				</td>
-				<td>
-					<CalculatePointCost score={abilityScore.con} />
-				</td>
-				<td>
-					<CalculatePointCost score={abilityScore.int} />
-				</td>
-				<td>
-					<CalculatePointCost score={abilityScore.wis} />
-				</td>
-				<td>
-					<CalculatePointCost score={abilityScore.cha} />
-				</td>
-				<td>
-					{abilityScore.points}/{abilityScore.maxPoints} Points Left
+					{getScore(scores, "ability").points}/
+					{getScore(scores, "ability").maxPoints} Points Left
 				</td>
 			</tr>
 		</>
 	);
 }
 
-function GenerateModifierRow({ totalScore }) {
+function GenerateTotalRow({ totalScore }) {
 	return (
 		<>
 			<tr className="table-odd-row">
+				<td></td>
+				{abilities.map((ability) => {
+					return <td key={ability}>=</td>;
+				})}
+			</tr>
+			<tr className="table-even-row">
+				<td>Total Score</td>
+				{abilities.map((ability) => {
+					return <td key={ability}>{totalScore[ability]}</td>;
+				})}
+			</tr>
+			<tr className="table-odd-row">
 				<td>Ability Modifier</td>
-				<td>{Math.floor((totalScore.str - 10) / 2)}</td>
-				<td>{Math.floor((totalScore.dex - 10) / 2)}</td>
-				<td>{Math.floor((totalScore.con - 10) / 2)}</td>
-				<td>{Math.floor((totalScore.int - 10) / 2)}</td>
-				<td>{Math.floor((totalScore.wis - 10) / 2)}</td>
-				<td>{Math.floor((totalScore.cha - 10) / 2)}</td>
+				{abilities.map((ability) => {
+					return <td key={ability}>{Math.floor((totalScore[ability] - 10) / 2)}</td>
+				})}
 			</tr>
 		</>
 	);
 }
 
-function GenerateRow({ leadRow, mainRow, mainRowName, setter }) {
-	if (mainRow.dontInclude) {
-		return;
-	}
+function GenerateRow({ leadRow = "+", scoreName, score, scores, setScores }) {
+	const row = getScore(scores, score);
+	if (row.dontInclude) return;
 
 	return (
 		<>
@@ -150,59 +141,60 @@ function GenerateRow({ leadRow, mainRow, mainRowName, setter }) {
 			</tr>
 			<tr className="table-even-row">
 				<td>
-					{mainRowName}
+					{scoreName}
 					<br />
-					{mainRow.name ? "( " + mainRow.name + " )" : ""}
+					{row.name ? "( " + row.name + " )" : ""}
 					<br />
 				</td>
-				<RenderCells row={mainRow} setter={setter} />
+				<RenderCells scores={scores} setScores={setScores} score={score} />
 			</tr>
 		</>
 	);
 }
 
-function RenderCells({ row, setter }) {
-	const cells = [
-		{ score: "str", value: row.str },
-		{ score: "dex", value: row.dex },
-		{ score: "con", value: row.con },
-		{ score: "int", value: row.int },
-		{ score: "wis", value: row.wis },
-		{ score: "cha", value: row.cha },
-	];
-	return cells.map((cell) => {
-		if (!row.mod || (row.blocked && row.blocked.includes(cell.score))) {
-			return <td key={cell.score}>{cell.value ? cell.value : 0}</td>;
+function RenderCells({ scores, setScores, score }) {
+	const row = getScore(scores, score);
+	return abilities.map((ability) => {
+		if (!row.mod || (row.blocked && row.blocked.includes(ability))) {
+			return <td key={ability}>{row[ability]}</td>;
 		}
 		return (
-			<td key={cell.score}>
+			<td key={ability}>
 				<table>
-                    <tbody>
-					<tr>
-						<td />
-						<td>{cell.value ? cell.value : 0}</td>
-						<td className="ud-button">
-							<button
-								onClick={() => {
-									if (row.max < 0 || cell.value < row.max) {
-										IncrementAbility(row, setter, cell.score);
-									}
-								}}
-							>
-								▲
-							</button>
-							<button
-								onClick={() => {
-									if (row.min < 0 || cell.value > row.min) {
-										DecrementAbility(row, setter, cell.score);
-									}
-								}}
-							>
-								▼
-							</button>
-						</td>
-					</tr>
-                    </tbody>
+					<tbody>
+						<tr>
+							<td />
+							<td>{row[ability]}</td>
+							<td className="ud-button">
+								<table>
+									<tbody>
+										<tr>
+											<td>
+												<button
+													onClick={() => {
+														IncrementAbility(scores, setScores, score, ability);
+													}}
+												>
+													▲
+												</button>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<button
+													onClick={() => {
+														DecrementAbility(scores, setScores, score, ability);
+													}}
+												>
+													▼
+												</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</td>
 		);
