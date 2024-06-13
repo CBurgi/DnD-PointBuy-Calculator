@@ -35,7 +35,6 @@ export const defaultScore = {
 };
 
 export const defaultASI = {
-    dontInclude: true,
 	name: "Level ",
 	mod: true,
 	min: 0,

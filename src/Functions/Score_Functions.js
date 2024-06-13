@@ -37,16 +37,18 @@ export const setScore = (setScores, score, newScore) => {
 	setScores((scores) => {
 		let nextScores = [...scores];
 		const scoreA = nextScores.find((s) => s.key === score);
+        const index = nextScores.findIndex((s) => s.key === score);
 		const scoreB = Object.assign({}, clearScore, newScore, {
 			key: score,
 			scoreName: scoreA.scoreName,
 			maxPoints: newScore.points,
 			base: newScore,
 		});
-		nextScores = nextScores.filter((s) => {
-			return s.key !== scoreA.key;
-		});
-		nextScores.push(scoreB);
+		// nextScores = nextScores.filter((s) => {
+		// 	return s.key !== scoreA.key;
+		// });
+		// nextScores.push(scoreB);
+        nextScores.splice(index, 1, scoreB)
 		return nextScores;
 	});
 };
@@ -60,8 +62,7 @@ export const addScore = (setScores, newScore) => {
 		let nextScores = [...scores];
 		nextScores.push({
 			...newScore,
-			maxPoints: newScore.points,
-			base: newScore,
+			maxPoints: newScore.points
 		});
 		return nextScores;
 	});
