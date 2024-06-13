@@ -15,7 +15,7 @@ export function RaceSelect({ races, setScores }) {
 								if (race.subraces && !race.subracesSet) {
 									race.subraces.unshift(defaultScore);
 									race.subraces.push(customScore);
-                                    race.subracesSet = true;
+									race.subracesSet = true;
 								}
 								setScore(setScores, "race", race);
 								setScore(setScores, "subrace", defaultScore);
@@ -37,7 +37,7 @@ export function SubraceSelect({ scores, setScores }) {
 	if (selectedRace.subraces) {
 		return (
 			<>
-				<td>Subace: </td>
+				<td>Subrace: </td>
 				<td>
 					<select
 						className="subraceSelect"
@@ -80,14 +80,18 @@ export function ClassSelect({ aClasses, setScores, level }) {
 										...defaultASI,
 										name: defaultASI.name + asiLevel,
 										key: "asi" + asiLevel,
-                                        level: asiLevel,
+										level: asiLevel,
 										scoreName: "Ability Score Increase",
 									};
-									addScore(setScores, newASI);
-                                    return asiLevel;
+									addScore(setScores, {
+										...newASI,
+										dontInclude: true,
+										base: newASI,
+									});
+									return asiLevel;
 								});
 							}
-                            showASI(setScores, level)
+							showASI(setScores, level);
 							return aClass;
 						});
 					}}
@@ -103,34 +107,42 @@ export function ClassSelect({ aClasses, setScores, level }) {
 }
 
 const showASI = (setScores, level) => {
-    setScores((scores) => {
+	setScores((scores) => {
 		const nextScores = [...scores];
-        nextScores.map((nextScore) => {
-            if(nextScore.level){
-                nextScore.dontInclude = nextScore.level <= level ? false : true
-            }
-            return nextScore
-        })
+		nextScores.map((nextScore) => {
+			if (nextScore.level) {
+				nextScore.dontInclude = nextScore.level <= level ? false : true;
+			}
+			return nextScore;
+		});
 		return nextScores;
 	});
-}
+};
 
 export function LevelSelect({ level, setLevel, setScores }) {
-    const levels = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+	const levels = [
+		0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+	];
 	return (
 		<>
 			<td>Level :</td>
 			<td>
 				<select
-                    value={20}
+					value={20}
 					className="levelSelect"
 					name="level"
 					onChange={(e) => {
-						setLevel((l) => e.target.value)
-                        showASI(setScores, e.target.value)
+						setLevel((l) => e.target.value);
+						showASI(setScores, e.target.value);
 					}}
 				>
-					{levels.map((l) => {return <option value={l} key={l}>Level {l}</option>})}
+					{levels.map((l) => {
+						return (
+							<option value={l} key={l}>
+								Level {l}
+							</option>
+						);
+					})}
 				</select>
 			</td>
 		</>
