@@ -1,4 +1,4 @@
-import { abilities } from "../App";
+import { abilities } from "../data/defaultScores";
 
 const pointDoubleThreshold = 13;
 const clearScore = {
@@ -39,6 +39,7 @@ export const setScore = (setScores, score, newScore) => {
 		const scoreA = nextScores.find((s) => s.key === score);
 		const scoreB = Object.assign({}, clearScore, newScore, {
 			key: score,
+			scoreName: scoreA.scoreName,
 			maxPoints: newScore.points,
 			base: newScore,
 		});
@@ -57,7 +58,11 @@ export const setScore = (setScores, score, newScore) => {
 export const addScore = (setScores, newScore) => {
 	setScores((scores) => {
 		let nextScores = [...scores];
-		nextScores.push(newScore);
+		nextScores.push({
+			...newScore,
+			maxPoints: newScore.points,
+			base: newScore,
+		});
 		return nextScores;
 	});
 };

@@ -1,6 +1,6 @@
 /*
     Classes:
-        table: borders 
+        scores-table: borders 
         table-head: head row colouring & font
         table-body: cell height
         table-odd-row: odd row colouring
@@ -16,14 +16,15 @@ import {
 	CalculatePointCost,
 	setScore,
 } from "./Score_Functions";
-import { abilities } from "../App";
+import { abilities } from "../data/defaultScores";
+import React from "react";
 
 export function GenerateTable({ scores, setScores, totalScore }) {
 	const headColumnWidth = "20%";
 	const columnWidth = "10%";
 
 	return (
-		<table className="table" style={{ width: "80%" }}>
+		<table className="scores-table" style={{ width: "80%" }}>
 			<thead>
 				<tr className="table-head">
 					<th style={{ width: headColumnWidth }}>Attribute</th>
@@ -38,15 +39,7 @@ export function GenerateTable({ scores, setScores, totalScore }) {
 			</thead>
 			<tbody className="table-body">
 				<GeneratePointbuyRow scores={scores} setScores={setScores} />
-				<GenerateRow
-					scoreName={"Race Bonus"}
-					score={"race"}
-					scores={scores}
-					setScores={setScores}
-				/>
-				<GenerateRow
-					scoreName={"Subrace Bonus"}
-					score={"subrace"}
+				<GenerateRows
 					scores={scores}
 					setScores={setScores}
 				/>
@@ -57,10 +50,11 @@ export function GenerateTable({ scores, setScores, totalScore }) {
 }
 
 function GeneratePointbuyRow({ scores, setScores }) {
+    const row = getScore(scores, "ability")
 	return (
 		<>
 			<tr className="table-odd-row">
-				<td>Ability Score</td>
+				<td>{row.scoreName}</td>
 				<RenderCells scores={scores} setScores={setScores} score={"ability"} />
 			</tr>
 			<tr className="even-row">
@@ -69,7 +63,7 @@ function GeneratePointbuyRow({ scores, setScores }) {
 					return (
 						<td key={ability}>
 							<CalculatePointCost
-								score={getScore(scores, "ability")[ability]}
+								score={row[ability]}
 							/>
 						</td>
 					);
@@ -106,32 +100,33 @@ function GenerateTotalRow({ totalScore }) {
 	);
 }
 
-function GenerateRow({ leadRow = "+", scoreName, score, scores, setScores }) {
-	const row = getScore(scores, score);
-	if (row.dontInclude) return;
-
-	return (
-		<>
-			<tr className="table-odd-row">
-				<td></td>
-				<td>{leadRow}</td>
-				<td>{leadRow}</td>
-				<td>{leadRow}</td>
-				<td>{leadRow}</td>
-				<td>{leadRow}</td>
-				<td>{leadRow}</td>
-			</tr>
-			<tr className="table-even-row">
-				<td>
-					{scoreName}
-					<br />
-					{row.name ? "( " + row.name + " )" : ""}
-					<br />
-				</td>
-				<RenderCells scores={scores} setScores={setScores} score={score} />
-			</tr>
-		</>
-	);
+function GenerateRows({ leadRow = "+", scores, setScores }) {
+    return scores.map((row) => {
+        if (row.dontInclude || row.key === "ability") return <React.Fragment key={row.key}/>;
+    
+        return (
+            <React.Fragment key={row.key}>
+                <tr className="table-odd-row">
+                    <td></td>
+                    <td>{leadRow}</td>
+                    <td>{leadRow}</td>
+                    <td>{leadRow}</td>
+                    <td>{leadRow}</td>
+                    <td>{leadRow}</td>
+                    <td>{leadRow}</td>
+                </tr>
+                <tr className="table-even-row">
+                    <td>
+                        {row.scoreName}
+                        <br />
+                        {row.name ? "( " + row.name + " )" : ""}
+                        <br />
+                    </td>
+                    <RenderCells scores={scores} setScores={setScores} score={row.key} />
+                </tr>
+            </React.Fragment>
+        );
+    })
 }
 
 function RenderCells({ scores, setScores, score }) {
@@ -211,7 +206,7 @@ function RenderCells({ scores, setScores, score }) {
 											setScore(setScores, row.key, baseScore);
 										}}
 									>
-										Reset Scores
+										Reset
 									</button>
 								</td>
 							</tr>
