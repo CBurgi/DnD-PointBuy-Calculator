@@ -1,33 +1,62 @@
 [
     {
-        "name": "class1"
+        "name": "[select]",
+        "asi": []
     },
     {
-        "name": "class2",
-        "asi":[
-            {
-                "name": 4,
-                "mod": true,
-                "max": 2,
-                "points": 2
-            }
-        ]
+        "name": "Artificer",
+        "asi": [4, 8, 12, 16, 19]
     },
     {
-        "name": "class3",
-        "asi":[
-            {
-                "name": 4,
-                "mod": true,
-                "max": 2,
-                "points": 2
-            },
-            {
-                "name": 8,
-                "mod": true,
-                "max": 2,
-                "points": 2
-            }
-        ]
+        "name": "Barbarian",
+        "asi": [4, 8, 12, 16, 19]
+    },
+    {
+        "name": "Bard",
+        "asi": [4, 8, 12, 16, 19]
+    },
+    {
+        "name": "Blood Hunter (HB)",
+        "asi": [4, 8, 12, 16, 19]
+    },
+    {
+        "name": "Cleric",
+        "asi": [4, 8, 12, 16, 19]
+    },
+    {
+        "name": "Druid",
+        "asi": [4, 8, 12, 16, 19]
+    },
+    {
+        "name": "Fighter",
+        "asi": [4, 6, 8, 12, 14, 16, 19]
+    },
+    {
+        "name": "Monk",
+        "asi": [4, 8, 12, 16, 19]
+    },
+    {
+        "name": "Paladin",
+        "asi": [4, 8, 12, 16, 19]
+    },
+    {
+        "name": "Ranger",
+        "asi": [4, 8, 12, 16, 19]
+    },
+    {
+        "name": "Rogue",
+        "asi": [4, 8, 10, 12, 16, 19]
+    },
+    {
+        "name": "Sorcerer",
+        "asi": [4, 8, 12, 16, 19]
+    },
+    {
+        "name": "Warlock",
+        "asi": [4, 8, 12, 16, 19]
+    },
+    {
+        "name": "Wizard",
+        "asi": [4, 8, 12, 16, 19]
     }
 ]

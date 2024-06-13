@@ -1,81 +1,138 @@
-import { defaultScore, customScore } from "../App";
+import { defaultScore, customScore, defaultASI } from "../data/defaultScores";
+import { addScore, deleteScore, getScore, setScore } from "./Score_Functions";
 
-export function RaceSelect({ races, setSelectedRace, setSelectedSubrace }) {
+export function RaceSelect({ races, setScores }) {
 	return (
-		<select
-            defaultValue="select race"
-			className="raceSelect"
-			name="race"
-			onChange={(e) =>
-				races.map((race) => {
-					if (race.name === e.target.value) {
-                        if(race.subraces){
-                            race.subraces.unshift(defaultScore);
-	                        race.subraces.push(customScore);
-                        }
-						setSelectedRace({
-							name: race.name,
-							mod: race.mod,
-                            min: (race.min ? race.min : 0),
-                            max: (race.max ? race.max : -1),
-                            points: (race.points ? race.points : -1),
-                            maxPoints: (race.points ? race.points : -1),
-                            blocked: race.blocked,
-							str: race.str ? race.str : 0,
-							dex: race.dex ? race.dex : 0,
-							con: race.con ? race.con : 0,
-							int: race.int ? race.int : 0,
-							wis: race.wis ? race.wis : 0,
-							cha: race.cha ? race.cha : 0,
-							subraces: race.subraces ? race.subraces : false,
-                            dontInclude: race.dontInclude
-						});
-                        setSelectedSubrace(defaultScore);
+		<>
+			<td key={"race-title"}>Race: </td>
+			<td key={"race"}>
+				<select
+					className="raceSelect"
+					name="race"
+					onChange={(e) =>
+						races.map((race) => {
+							if (race.name === e.target.value) {
+								if (race.subraces && !race.subracesSet) {
+									race.subraces.unshift(defaultScore);
+									race.subraces.push(customScore);
+                                    race.subracesSet = true;
+								}
+								setScore(setScores, "race", race);
+								setScore(setScores, "subrace", defaultScore);
+							}
+							return race;
+						})
 					}
-				})
-			}
-		>
-			{races &&
-				races.map((race) => <option key={race.name}>{race.name}</option>)}
-		</select>
+				>
+					{races &&
+						races.map((race) => <option key={race.name}>{race.name}</option>)}
+				</select>
+			</td>
+		</>
 	);
 }
 
-export function SubRaceSelect({ selectedRace, setSelectedSubrace }) {
+export function SubraceSelect({ scores, setScores }) {
+	const selectedRace = getScore(scores, "race");
 	if (selectedRace.subraces) {
 		return (
-			<select
-            className="subraceSelect"
-				name="subrace"
-				onChange={(e) =>
-					selectedRace.subraces.map((subrace) => {
-						if (subrace.name === e.target.value) {
-							setSelectedSubrace({
-								name: subrace.name,
-                                mod: subrace.mod,
-                                min: (subrace.min ? subrace.min : 0),
-                                max: (subrace.max ? subrace.max : -1),
-                                points: (subrace.points ? subrace.points : -1),
-                                maxPoints: (subrace.points ? subrace.points : -1),
-                                blocked: subrace.blocked,
-								str: subrace.str ? subrace.str : 0,
-								dex: subrace.dex ? subrace.dex : 0,
-								con: subrace.con ? subrace.con : 0,
-								int: subrace.int ? subrace.int : 0,
-								wis: subrace.wis ? subrace.wis : 0,
-								cha: subrace.cha ? subrace.cha : 0,
-                                dontInclude: subrace.dontInclude,
-							});
+			<>
+				<td>Subace: </td>
+				<td>
+					<select
+						className="subraceSelect"
+						name="subrace"
+						onChange={(e) =>
+							selectedRace.subraces.map((subrace) => {
+								if (subrace.name === e.target.value) {
+									setScore(setScores, "subrace", subrace);
+								}
+								return subrace;
+							})
 						}
-					})
-				}
-			>
-				{selectedRace.subraces &&
-					selectedRace.subraces.map((subrace) => (
-						<option key={subrace.name}>{subrace.name}</option>
-					))}
-			</select>
+					>
+						{selectedRace.subraces &&
+							selectedRace.subraces.map((subrace) => (
+								<option key={subrace.name}>{subrace.name}</option>
+							))}
+					</select>
+				</td>
+			</>
 		);
 	}
 	return;
+}
+
+export function ClassSelect({ aClasses, setScores, level }) {
+	return (
+		<>
+			<td>Class :</td>
+			<td>
+				<select
+					className="classSelect"
+					name="class"
+					onChange={(e) => {
+						deleteScore(setScores, "asi");
+						aClasses.map((aClass) => {
+							if (aClass.name === e.target.value) {
+								aClass.asi.map((asiLevel) => {
+									const newASI = {
+										...defaultASI,
+										name: defaultASI.name + asiLevel,
+										key: "asi" + asiLevel,
+                                        level: asiLevel,
+										scoreName: "Ability Score Increase",
+									};
+									addScore(setScores, newASI);
+                                    return asiLevel;
+								});
+							}
+                            showASI(setScores, level)
+							return aClass;
+						});
+					}}
+				>
+					{aClasses &&
+						aClasses.map((aClass) => (
+							<option key={aClass.name}>{aClass.name}</option>
+						))}
+				</select>
+			</td>
+		</>
+	);
+}
+
+const showASI = (setScores, level) => {
+    setScores((scores) => {
+		const nextScores = [...scores];
+        nextScores.map((nextScore) => {
+            if(nextScore.level){
+                nextScore.dontInclude = nextScore.level <= level ? false : true
+            }
+            return nextScore
+        })
+		return nextScores;
+	});
+}
+
+export function LevelSelect({ level, setLevel, setScores }) {
+    const levels = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+	return (
+		<>
+			<td>Level :</td>
+			<td>
+				<select
+                    value={20}
+					className="levelSelect"
+					name="level"
+					onChange={(e) => {
+						setLevel((l) => e.target.value)
+                        showASI(setScores, e.target.value)
+					}}
+				>
+					{levels.map((l) => {return <option value={l} key={l}>Level {l}</option>})}
+				</select>
+			</td>
+		</>
+	);
 }
